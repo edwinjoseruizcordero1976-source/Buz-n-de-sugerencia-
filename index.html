@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Buzón de Sugerencias Digital · PREPARA 360 · Regional 15</title>
+<style>
+:root{--az:#002D62;--az2:#0B4A94;--rj:#CE1126;--bl:#fff;--bg:#F3F5F9;--tx:#1d2433;--bd:#cfd6e2;--mu:#5b6578}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:16px/1.55 "Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+h1,h2{font-family:Georgia,"Times New Roman",serif;color:var(--az);line-height:1.2}
+.flag{display:flex;height:8px}.flag i{flex:1;background:var(--az)}.flag i:nth-child(2){background:var(--bl)}.flag i:nth-child(3){background:var(--rj)}
+header{background:var(--az);color:var(--bl);padding:1.6rem 1rem 1.4rem;text-align:center}
+header h1{color:var(--bl);font-size:1.7rem}header p{opacity:.85;margin-top:.3rem}
+main{max-width:760px;margin:1.5rem auto;padding:0 1rem}
+section{display:none;background:var(--bl);border-radius:10px;padding:1.6rem;box-shadow:0 2px 14px rgba(0,30,70,.08);border-top:4px solid var(--az)}
+section.on{display:block}
+section>h2{margin-bottom:.4rem}.lead{color:var(--mu);margin-bottom:1.2rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.full{grid-column:1/-1}
+label{display:block;font-weight:600;color:var(--az);margin-bottom:.3rem;font-size:.92rem}
+input,select,textarea{width:100%;padding:.65rem .75rem;border:1.5px solid var(--bd);border-radius:6px;font:inherit;background:var(--bl)}
+input[readonly]{background:#eef2f8;color:var(--az);font-weight:700}
+textarea{min-height:140px;resize:vertical}
+.bad{border-color:var(--rj)}.err{color:var(--rj);font-size:.82rem;min-height:1.1rem;display:block}
+.btn{background:var(--az);color:var(--bl);border:0;border-radius:6px;padding:.7rem 1.3rem;font:600 .95rem inherit;font-family:inherit;cursor:pointer}
+.btn:hover{background:var(--az2)}.btn.rj{background:var(--rj)}.btn.rj:hover{background:#a50d1d}
+.btn.ghost{background:var(--bl);color:var(--az);border:1.5px solid var(--az)}
+.btn[disabled]{opacity:.6;cursor:wait}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.msg{padding:.9rem 1rem;border-radius:6px;margin-bottom:1rem;border-left:5px solid;display:none}
+.msg.ok{display:block;background:#e7f4ea;border-color:#1f7a3a;color:#14532d}
+.msg.no{display:block;background:#fdeaec;border-color:var(--rj);color:#7a0b18}
+.auth{max-width:460px;margin:0 auto;text-align:center}
+.auth input{text-align:center;letter-spacing:1px;text-transform:uppercase;font-size:1.1rem}
+.trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--rj);outline-offset:2px}
+.tabs{display:flex;gap:.25rem;border-bottom:2px solid var(--bd);margin-bottom:1.2rem;flex-wrap:wrap}
+.tab{background:none;border:0;padding:.6rem 1rem;font:600 .95rem inherit;font-family:inherit;color:var(--mu);cursor:pointer;border-bottom:4px solid transparent;margin-bottom:-2px}
+.tab.on{color:var(--az);border-color:var(--rj)}
+.card{border:1.5px solid var(--bd);border-left:5px solid var(--az);border-radius:6px;padding:.8rem 1rem;margin:.7rem 0}
+.card .meta{color:var(--mu);font-size:.85rem}.card .meta b{color:var(--az)}
+.card p{margin-top:.4rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.tag{display:inline-block;padding:.05rem .5rem;border-radius:99px;background:#e3ebf7;color:var(--az);font-size:.78rem;margin-right:.3rem}
+.aviso-priv{background:#fff8e1;border-left:5px solid #c79100;padding:.7rem .9rem;border-radius:6px;margin-bottom:1rem;font-size:.9rem;color:#5c4400}
+footer{text-align:center;color:var(--mu);font-size:.82rem;padding:1.5rem 1rem}
+</style>
+</head>
+<body>
+<div class="flag"><i></i><i></i><i></i></div>
+<header>
+  <h1>Buzón de Sugerencias Digital</h1>
+  <p>PREPARA 360 · Regional 15 · Ministerio de Educación (MINERD)</p>
+</header>
+
+<main>
+  <!-- ACCESO POR CÓDIGO DE DISTRITO -->
+  <section id="acceso" class="on">
+    <div class="auth">
+      <h2>Acceso con código del distrito</h2>
+      <p class="lead">Escriba el código asignado a su distrito educativo para ingresar al buzón.</p>
+      <div class="row" style="justify-content:center">
+        <input id="codigo" placeholder="Código de acceso" maxlength="20" autocomplete="off" style="max-width:260px">
+        <button class="btn" id="btnEntrar" type="button">Ingresar</button>
+      </div>
+      <span class="err" id="errCodigo" style="margin-top:.5rem"></span>
+    </div>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section id="formulario">
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab on" id="tabEnviar" role="tab">Enviar sugerencia</button>
+      <button type="button" class="tab" id="tabVer" role="tab">Sugerencias de mi distrito</button>
+    </div>
+    <div id="vistaEnviar">
+    <h2>Su opinión mejora nuestros centros</h2>
+    <p class="lead">Complete los campos y presione «Enviar sugerencia». Llegará directamente a la coordinación regional.</p>
+    <div class="aviso-priv">Las sugerencias enviadas desde un distrito son visibles para los directores de ese mismo distrito. No escriba datos personales de estudiantes ni de terceros.</div>
+    <div class="msg" id="aviso" role="status"></div>
+    <form id="frm" novalidate>
+      <div class="grid">
+        <div class="full"><label for="centro">Nombre del centro educativo / código del centro</label>
+          <input id="centro" autocomplete="off" placeholder="Escriba el nombre o código real del centro educativo"><span class="err"></span></div>
+        <div><label for="distrito">Distrito educativo</label>
+          <input id="distrito" readonly tabindex="-1"><span class="err"></span></div>
+        <div><label for="actor">Tipo de actor</label>
+          <select id="actor"><option value="">Seleccione…</option><option>Docente</option><option>Participante</option><option>Directivo</option><option>Familiar</option></select><span class="err"></span></div>
+        <div class="full"><label for="cat">Categoría de la sugerencia</label>
+          <select id="cat"><option value="">Seleccione…</option><option>Pedagógica</option><option>Administrativa</option><option>Infraestructura</option><option>Otra</option></select><span class="err"></span></div>
+        <div class="full"><label for="msg">Mensaje o sugerencia detallada</label>
+          <textarea id="msg" placeholder="Describa su sugerencia con el mayor detalle posible (mínimo 15 caracteres)."></textarea><span class="err"></span></div>
+      </div>
+      <div class="trampa" aria-hidden="true"><label>No llenar<input id="web" tabindex="-1" autocomplete="off"></label></div>
+      <div class="row" style="margin-top:1.2rem">
+        <button class="btn rj" id="btnEnviar" type="submit">📩 Enviar sugerencia</button>
+        <button class="btn ghost" type="reset" id="btnLimpiar">Limpiar</button>
+        <button class="btn ghost" type="button" id="btnSalir" style="margin-left:auto">Cerrar sesión</button>
+      </div>
+    </form>
+    </div>
+
+    <div id="vistaVer" hidden>
+      <h2>Sugerencias de su distrito</h2>
+      <p class="lead" id="verLead">Aquí aparecen las sugerencias enviadas desde su distrito. Solo puede leerlas.</p>
+      <div class="row">
+        <input id="buscar" type="search" placeholder="Buscar por centro o mensaje…" style="flex:1;min-width:200px">
+        <button class="btn ghost" id="btnRef" type="button">🔄 Actualizar</button>
+      </div>
+      <span class="err" id="verErr"></span>
+      <div id="listaDistrito"></div>
+    </div>
+  </section>
+</main>
+<footer>PREPARA 360 · Regional 15 de Educación · República Dominicana</footer>
+
+<script>
+(() => {
+  // Pegue aquí la URL de la aplicación web de Google Apps Script (termina en /exec).
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbygPwsS0-B4IOzjVostUxnFhjk0c2it2U1pS7AgAdqmYx5HbaplQ3RSw2OK0pfeYMI/exec";
+
+  const $ = id => document.getElementById(id);
+  const F = { centro: $("centro"), actor: $("actor"), cat: $("cat"), msg: $("msg") };
+  let codigoActual = "", distritoActual = "", LISTA = [];
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  async function nube(payload) {
+    if (!ENDPOINT || /^PEGAR/.test(ENDPOINT)) throw new Error("SIN_ENDPOINT");
+    const r = await fetch(ENDPOINT, { method: "POST", body: JSON.stringify(payload) });
+    return await r.json();
+  }
+
+  function ver(id) {
+    ["acceso", "formulario"].forEach(s => $(s).classList.toggle("on", s === id));
+  }
+
+  function aviso(html, clase) {
+    const a = $("aviso");
+    a.className = "msg " + clase;
+    a.innerHTML = html;
+    a.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function entrar(codigo, distrito) {
+    codigoActual = codigo; distritoActual = distrito;
+    $("distrito").value = distrito;
+    try { sessionStorage.setItem("p360c", codigo); } catch (e) {}
+    $("aviso").className = "msg";
+    ver("formulario");
+  }
+
+  function mostrarTab(t) {
+    $("vistaEnviar").hidden = t !== "enviar";
+    $("vistaVer").hidden = t !== "ver";
+    $("tabEnviar").classList.toggle("on", t === "enviar");
+    $("tabVer").classList.toggle("on", t === "ver");
+    if (t === "ver") cargarDistrito();
+  }
+
+  function pintarLista() {
+    const q = $("buscar").value.toLowerCase().trim();
+    const datos = LISTA.filter(x => !q || (x.centro + " " + x.mensaje).toLowerCase().includes(q));
+    $("listaDistrito").innerHTML = datos.map(x =>
+      `<div class="card"><div class="meta"><b>${esc(x.centro)}</b> · ${esc(x.fecha)}</div>` +
+      `<div style="margin-top:.3rem"><span class="tag">${esc(x.categoria)}</span><span class="tag">${esc(x.actor)}</span></div>` +
+      `<p>${esc(x.mensaje)}</p></div>`).join("") ||
+      '<p class="lead" style="margin-top:1rem">' + (LISTA.length ? "No hay resultados para esa búsqueda." : "Aún no hay sugerencias de su distrito.") + "</p>";
+  }
+
+  async function cargarDistrito() {
+    $("verErr").textContent = "Cargando…";
+    try {
+      const r = await nube({ accion: "misSugerencias", codigo: codigoActual });
+      if (r && r.ok) {
+        LISTA = r.datos || [];
+        $("verErr").textContent = "";
+        $("verLead").textContent = "Distrito " + r.distrito + " · " + LISTA.length + " sugerencia(s). Solo puede leerlas.";
+        pintarLista();
+      } else if (r && r.error === "codigo") {
+        salir(); $("errCodigo").textContent = "Su código ya no es válido. Ingrese nuevamente.";
+      } else { $("verErr").textContent = "No se pudieron cargar las sugerencias." + (r && r.error ? " (Detalle: " + r.error + ")" : ""); }
+    } catch (e) {
+      $("verErr").textContent = "No se pudo conectar. Revise su internet e intente de nuevo.";
+    }
+  }
+
+  $("tabEnviar").onclick = () => mostrarTab("enviar");
+  $("tabVer").onclick = () => mostrarTab("ver");
+  $("btnRef").onclick = cargarDistrito;
+  $("buscar").addEventListener("input", pintarLista);
+
+  function salir() {
+    codigoActual = ""; distritoActual = ""; LISTA = [];
+    mostrarTab("enviar"); $("listaDistrito").innerHTML = ""; $("buscar").value = "";
+    try { sessionStorage.removeItem("p360c"); } catch (e) {}
+    $("codigo").value = ""; $("errCodigo").textContent = "";
+    $("frm").reset(); $("aviso").className = "msg";
+    ver("acceso");
+  }
+
+  async function verificar(codigo, silencioso) {
+    const err = $("errCodigo");
+    if (!codigo) { if (!silencioso) err.textContent = "Escriba el código de acceso."; return; }
+    if (!silencioso) err.textContent = "Verificando…";
+    $("btnEntrar").disabled = true;
+    try {
+      const r = await nube({ accion: "validar", codigo });
+      if (r && r.ok) { err.textContent = ""; entrar(codigo.toUpperCase(), r.distrito); }
+      else if (!silencioso) err.textContent = "Código de acceso incorrecto. Verifique e intente nuevamente.";
+    } catch (e) {
+      if (!silencioso) err.textContent = e.message === "SIN_ENDPOINT"
+        ? "El buzón aún no está configurado. Avise a la coordinación regional."
+        : "No se pudo conectar. Revise su conexión a internet e intente de nuevo.";
+    } finally { $("btnEntrar").disabled = false; }
+  }
+
+  $("btnEntrar").onclick = () => verificar($("codigo").value.trim());
+  $("codigo").addEventListener("keydown", e => { if (e.key === "Enter") verificar($("codigo").value.trim()); });
+  $("btnSalir").onclick = salir;
+
+  const reglas = {
+    centro: v => v.length >= 3 || "Escriba el nombre o código del centro.",
+    actor: v => !!v || "Seleccione el tipo de actor.",
+    cat: v => !!v || "Seleccione una categoría.",
+    msg: v => v.length >= 15 || "El mensaje debe tener al menos 15 caracteres."
+  };
+
+  function validar() {
+    let ok = true;
+    for (const k in F) {
+      const res = reglas[k](F[k].value.trim());
+      F[k].classList.toggle("bad", res !== true);
+      F[k].parentNode.querySelector(".err").textContent = res === true ? "" : res;
+      if (res !== true) ok = false;
+    }
+    return ok;
+  }
+
+  Object.values(F).forEach(el => el.addEventListener("input", () => {
+    el.classList.remove("bad");
+    el.parentNode.querySelector(".err").textContent = "";
+  }));
+
+  $("frm").addEventListener("submit", async ev => {
+    ev.preventDefault();
+    if (!validar()) return;
+    const btn = $("btnEnviar");
+    btn.disabled = true; btn.textContent = "Enviando…";
+    try {
+      const r = await nube({
+        accion: "enviar", codigo: codigoActual, web: $("web").value,
+        centro: F.centro.value.trim(), actor: F.actor.value, categoria: F.cat.value, mensaje: F.msg.value.trim()
+      });
+      if (r && r.ok) {
+        aviso("<strong>¡Sugerencia enviada con éxito!</strong> Ya fue recibida por la coordinación regional de PREPARA 360.", "ok");
+        $("frm").reset(); $("distrito").value = distritoActual;
+      } else if (r && r.error === "codigo") {
+        salir(); $("errCodigo").textContent = "Su código ya no es válido. Ingrese nuevamente.";
+      } else {
+        aviso("No se pudo enviar la sugerencia. Revise los datos e intente de nuevo." + (r && r.error ? " (Detalle: " + esc(r.error) + ")" : ""), "no");
+      }
+    } catch (e) {
+      aviso(e.message === "SIN_ENDPOINT"
+        ? "El buzón aún no está configurado. Avise a la coordinación regional."
+        : "No se pudo conectar. Su texto sigue en pantalla: revise su internet y vuelva a presionar «Enviar».", "no");
+    } finally { btn.disabled = false; btn.textContent = "📩 Enviar sugerencia"; }
+  });
+
+  $("btnLimpiar").addEventListener("click", () => setTimeout(() => { $("distrito").value = distritoActual; }, 0));
+
+  // Restaurar sesión si el usuario recarga la página (se vuelve a validar en el servidor).
+  try { const g = sessionStorage.getItem("p360c"); if (g) verificar(g, true); } catch (e) {}
+})();
+</script>
+</body>
+</html>
